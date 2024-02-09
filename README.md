@@ -1,5 +1,20 @@
 # Trade Journal Front End
 
+This is SPA trade journal targeted towards visualizing basic financial data with the goal of demonstrating clean REACT code in a Typescript Redux environment. Styled mainly with Material UI.
+
+It should contain:
+State Management With Redux
+Higher Order Components
+Fetching / Lazy loading components
+Tests with Jest
+
+-UI Contents
+Banner with Tickers Of Interest
+Chart with Multiple Day Data visualizing
+Quote Component
+Trade Journal Table
+Tradier Bokerage API action buttons
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
