@@ -2,15 +2,16 @@ import React from 'react';
 import { Container, Typography, Card, CardContent, TextField, FormControlLabel, Switch, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+// import '@fontsource/roboto/300.css';
+// import '@fontsource/roboto/400.css';
+// import '@fontsource/roboto/500.css';
+// import '@fontsource/roboto/700.css';
 
 
 //REDUX
-import { useAppSelector, useAppDispatch } from './hooks';
-import { addSymbol } from './tickersSlice';
+import { useAppSelector, useAppDispatch } from './store/hooks';
+import { addSymbol } from './slices/tickersSlice';
+import TickerCard from './components/TickerCard/TickerCard';
 
 const App: React.FC = () => {
   //redux state
@@ -45,14 +46,7 @@ const App: React.FC = () => {
       {/* Section for Open Positions */}
       <Grid container spacing={3}>
         {tickers.map((ticker) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={ticker}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">{ticker}</Typography>
-                <Typography variant="body1">Value: $100</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+         <TickerCard key={ticker} ticker={ticker}/>
         ))}
         <Grid onClick={handleAddTicker} item xs={12} sm={6} md={4} lg={3} key={'addTicker'} >
             <Card>
