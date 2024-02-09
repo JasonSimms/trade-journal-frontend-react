@@ -1,35 +1,10 @@
 import React from 'react';
-import { Container, Typography, Card, CardContent, TextField, FormControlLabel, Switch, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Container, Typography,  TextField, FormControlLabel, Switch, Button,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-// import '@fontsource/roboto/300.css';
-// import '@fontsource/roboto/400.css';
-// import '@fontsource/roboto/500.css';
-// import '@fontsource/roboto/700.css';
-
-
-//REDUX
-import { useAppSelector, useAppDispatch } from './store/hooks';
-import { addSymbol } from './slices/tickersSlice';
-import TickerCard from './components/TickerCard/TickerCard';
+import  TickerGroup from './components/TickerGroup/TickerGroup';
 
 const App: React.FC = () => {
-  //redux state
-  const tickers = useAppSelector((state) => state.tickers.symbols)
-
-  // Function to handle the click event
-  const [newTicker, setNewTicker] = React.useState('');
-
-    // Get the dispatch function from the hook
-    const dispatch = useAppDispatch();
-
-  const handleAddTicker = () => {
-    if (newTicker) {
-      dispatch(addSymbol(newTicker));
-      setNewTicker(''); // Clear the input field
-    }
-  };
-
 
   // Placeholder data for the chart
   const data = [
@@ -44,20 +19,7 @@ const App: React.FC = () => {
       </Typography>
 
       {/* Section for Open Positions */}
-      <Grid container spacing={3}>
-        {tickers.map((ticker) => (
-         <TickerCard key={ticker} ticker={ticker}/>
-        ))}
-        <Grid onClick={handleAddTicker} item xs={12} sm={6} md={4} lg={3} key={'addTicker'} >
-            <Card>
-              <CardContent>
-                <Typography variant="h6" >Add+</Typography>
-                <TextField value={newTicker}
-            onChange={(event) => setNewTicker(event.target.value)}/>
-              </CardContent>
-            </Card>
-          </Grid>
-      </Grid>
+     <TickerGroup />
 
       {/* Section for Chart */}
       
