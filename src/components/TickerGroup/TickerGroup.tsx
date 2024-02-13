@@ -6,10 +6,7 @@ import TickerCard from "./TickerCard";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { addSymbol } from "../../slices/tickersSlice";
 
-// interface TickerGroupProps {
-//   tickers: string[];
-//   onAddTicker: (ticker: string) => void;
-// }
+import { getSymbolInfo, isSymbolValid } from '../../utils/isSymbolValid'; 
 
 const TickerGroup: React.FC = () => {
   //redux state
@@ -21,10 +18,14 @@ const TickerGroup: React.FC = () => {
   // Get the dispatch function from the hook
   const dispatch = useAppDispatch();
 
-  const handleAddTicker = () => {
+  const handleAddTicker = async() => {
     if (newTicker) {
-      dispatch(addSymbol(newTicker));
-      setNewTicker(""); // Clear the input field
+      const symbolInfo = await getSymbolInfo(newTicker);
+      console.log('symbolInfo...',symbolInfo);
+      if(symbolInfo){
+        dispatch(addSymbol(newTicker));
+        setNewTicker(""); // Clear the input field
+      } else console.error('Not a valid Symbol')  //TODO TOASt notifaction
     }
   };
 
@@ -47,7 +48,12 @@ const TickerGroup: React.FC = () => {
             <Typography variant="h6">Add+</Typography>
             <TextField
               value={newTicker}
-              onChange={(event) => setNewTicker(event.target.value)}
+              onChange={(event) => setNewTicker(event.target.value.toUpperCase())}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  return handleAddTicker();
+                }
+              }}
             />
           </CardContent>
         </Card>
