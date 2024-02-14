@@ -4,49 +4,57 @@ import TickerCard from "./TickerCard";
 
 //REDUX
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { addSymbol } from "../../slices/tickersSlice";
+import { addSymbol, setActiveSymbol } from "../../slices/tickersSlice";
 
 import { getSymbolInfo, isSymbolValid } from '../../utils/isSymbolValid'; 
 
 const TickerGroup: React.FC = () => {
   //redux state
   const tickers = useAppSelector((state) => state.tickers.symbols);
+  const activeSymbol = useAppSelector((state) => state.tickers.activeSymbol);
 
-  // Function to handle the click event
   const [newTicker, setNewTicker] = React.useState("");
+  const [inputError, setInputError] = React.useState(false);
 
   // Get the dispatch function from the hook
   const dispatch = useAppDispatch();
 
-  const handleAddTicker = async() => {
+  const handleAddTicker = async () => {
     if (newTicker) {
       const symbolInfo = await getSymbolInfo(newTicker);
-      console.log('symbolInfo...',symbolInfo);
-      if(symbolInfo){
+      if (symbolInfo && !tickers.includes(newTicker)) {
         dispatch(addSymbol(newTicker));
+        dispatch(setActiveSymbol(newTicker));
         setNewTicker(""); // Clear the input field
-      } else console.error('Not a valid Symbol')  //TODO TOASt notifaction
+        setInputError(false); // Reset the error state
+      } else {
+        console.error('Not a valid Symbol'); //TODO TOASt notification
+        setInputError(true); // Set the error state
+      }
     }
   };
+
+  const handleSetActiveSymbol = (str:string) =>{
+    dispatch(setActiveSymbol(str));
+  }
 
   return (
     <Grid container spacing={3}>
       {tickers.map((ticker) => (
-        <TickerCard key={ticker} ticker={ticker} />
+        <TickerCard setActiveSymbol={handleSetActiveSymbol} key={ticker} ticker={ticker} isActive={ticker === activeSymbol}/>
       ))}
       <Grid
         onClick={handleAddTicker}
         item
-        xs={12}
-        sm={6}
-        md={4}
-        lg={3}
+        xs={12} sm={3} md={3} lg={2}
         key={"addTicker"}
       >
         <Card>
           <CardContent>
             <Typography variant="h6">Add+</Typography>
-            <TextField
+            <TextField 
+              error={inputError}
+              helperText={inputError ? "Symbol provided is not valid try TSLA" : ""}
               value={newTicker}
               onChange={(event) => setNewTicker(event.target.value.toUpperCase())}
               onKeyDown={(event) => {

@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TickersState {
   symbols: string[];
+  activeSymbol?: string;
 }
 
 const initialState: TickersState = {
-  symbols: ['INITIAL', 'STATE']
+  symbols: ['SBUX', 'IWM', 'AAPL'],
+  activeSymbol: undefined, // Initialize with no active symbol
 };
 
 const tickersSlice = createSlice({
@@ -20,10 +22,13 @@ const tickersSlice = createSlice({
     },
     removeSymbol: (state, action: PayloadAction<string>) => {
       state.symbols = state.symbols.filter((symbol) => symbol !== action.payload);
-    }
+    },
+    setActiveSymbol: (state, action: PayloadAction<string>) => {
+      state.activeSymbol = action.payload;
+    },
   }
 });
 
-export const { setSymbols, addSymbol, removeSymbol } = tickersSlice.actions;
+export const { setSymbols, addSymbol, removeSymbol, setActiveSymbol } = tickersSlice.actions;
 
 export default tickersSlice.reducer;

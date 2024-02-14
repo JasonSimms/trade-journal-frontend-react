@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography,  TextField, FormControlLabel, Switch, Button,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
+
 import  TickerGroup from './components/TickerGroup/TickerGroup';
 
 const App: React.FC = () => {

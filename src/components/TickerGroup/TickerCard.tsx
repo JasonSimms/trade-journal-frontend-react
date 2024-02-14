@@ -5,15 +5,19 @@ import { Grid, Card, CardContent, Typography } from '@mui/material';
 
 interface TickerCardProps {
   ticker: string;
+  setActiveSymbol: Function;
+  isActive?: boolean;
 }
 
-const TickerCard: React.FC<TickerCardProps> = ({ ticker }) => {
+
+const TickerCard: React.FC<TickerCardProps> = ({ setActiveSymbol, ticker, isActive=false }) => {
+  const cardClassName = isActive ? 'tickerCard centeredContent active' : 'centeredContent tickerCard';
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3} key={ticker}>
-      <Card>
+    <Grid item xs={12} sm={3} md={3} lg={2} key={ticker} onClick={()=>setActiveSymbol(ticker)}>
+      <Card className={cardClassName}>
         <CardContent>
           <Typography variant="h6">{ticker}</Typography>
-          <Typography variant="body1">Value: $100</Typography>
+          {/* <Typography variant="body1">Value: $100</Typography> */}
         </CardContent>
       </Card>
     </Grid>

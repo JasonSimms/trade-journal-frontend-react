@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import './App.css';
+
 
 //Material UI requires Roboto font
 import '@fontsource/roboto/300.css';
