@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 // // import store from '../store';
 
-import App from "../App";
+import App from "./App";
 
 global.ResizeObserver = require("resize-observer-polyfill"); // ? related to rechart component  possible
 

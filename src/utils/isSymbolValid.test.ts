@@ -1,4 +1,4 @@
-import { isSymbolValid, getSymbolInfo } from '../utils/isSymbolValid';
+import { isSymbolValid, getSymbolInfo } from './isSymbolValid';
 
 describe('isSymbolValid', () => {
   it('should return true for a valid symbol', () => {

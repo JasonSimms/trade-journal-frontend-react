@@ -1,12 +1,19 @@
 import React from "react";
-import { Grid, Card, CardContent, Typography, TextField } from "@mui/material";
+import {
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Box,
+} from "@mui/material";
 import TickerCard from "./TickerCard";
 
 //REDUX
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { addSymbol, setActiveSymbol } from "../../slices/tickersSlice";
 
-import { getSymbolInfo, isSymbolValid } from '../../utils/isSymbolValid'; 
+import { getSymbolInfo, isSymbolValid } from "../../utils/isSymbolValid";
 
 const TickerGroup: React.FC = () => {
   //redux state
@@ -28,35 +35,47 @@ const TickerGroup: React.FC = () => {
         setNewTicker(""); // Clear the input field
         setInputError(false); // Reset the error state
       } else {
-        console.error('Not a valid Symbol'); //TODO TOASt notification
+        console.error("Not a valid Symbol"); //TODO TOASt notification
         setInputError(true); // Set the error state
       }
     }
   };
 
-  const handleSetActiveSymbol = (str:string) =>{
+  const handleSetActiveSymbol = (str: string) => {
     dispatch(setActiveSymbol(str));
-  }
+  };
 
   return (
     <Grid container spacing={3}>
       {tickers.map((ticker) => (
-        <TickerCard setActiveSymbol={handleSetActiveSymbol} key={ticker} ticker={ticker} isActive={ticker === activeSymbol}/>
+        <TickerCard
+          setActiveSymbol={handleSetActiveSymbol}
+          key={ticker}
+          ticker={ticker}
+          isActive={ticker === activeSymbol}
+        />
       ))}
       <Grid
-        onClick={handleAddTicker}
         item
-        xs={12} sm={3} md={3} lg={2}
+        onClick={handleAddTicker}
+        xs={12}
+        sm={3}
+        md={3}
+        lg={2}
         key={"addTicker"}
       >
         <Card>
-          <CardContent>
-            <Typography variant="h6">Add+</Typography>
-            <TextField 
+          <CardContent >
+            <TextField
+              label="Add A Ticker"
               error={inputError}
-              helperText={inputError ? "Symbol provided is not valid try TSLA" : ""}
+              helperText={
+                inputError ? "Symbol provided is not valid try TSLA" : ""
+              }
               value={newTicker}
-              onChange={(event) => setNewTicker(event.target.value.toUpperCase())}
+              onChange={(event) =>
+                setNewTicker(event.target.value.toUpperCase())
+              }
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   return handleAddTicker();

@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import TickerCard from '../components/TickerGroup/TickerCard';
+import TickerCard from './TickerCard';
 
 describe('TickerCard', () => {
   test('renders the ticker symbol', () => {
